@@ -16,10 +16,11 @@ namespace Synchronization1
             InitializeSystem(e, TimeSpan.FromMilliseconds(5000));
             var service = new ConditionalHolder(targetService, () => waiter.Wait());
             var tasks = Enumerable
-                .Range(1, 100)
+                .Range(1, 5)
                 .Select(i => service.DoSomeWork());
-            Task.WaitAll(tasks.ToArray());
+            await Task.Delay(10000);
             Console.WriteLine("Done all!");
+            Console.ReadLine();
         }
 
         private static async Task InitializeSystem(EventWaitHandle @event, TimeSpan duration)
